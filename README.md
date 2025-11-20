@@ -1,0 +1,2 @@
+# KurumiGeminiWebSkin
+用于GeminiWEB的约会大作战中时崎狂三这一角色的主题CSS,可通过Stylus注入.
