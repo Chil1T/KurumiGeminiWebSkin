@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Gemini - Tokisaki Kurumi (Nightmare)
 @namespace      github.com/Chil1T/KurumiGeminiWebSkin
-@version        1.0.3
+@version        1.0.4
 @description    Date A Live Kurumi Theme for Gemini - Square Corners Update (Optimized)
 @author         Master Gemini  &&  chilltea 
 ==/UserStyle== */
@@ -59,10 +59,10 @@
 	}
 
 	/* 让所有主要容器彻底透明，露出背景 */
-	chat-window,
+	.chat-window,
 	.mat-drawer-container,
-	mat-sidenav-container,
-	bard-sidenav,
+	.mat-sidenav-container,
+	.bard-sidenav,
 	.input-area-container,
 	.conversation-container,
 	.mdc-card,
@@ -72,16 +72,22 @@
 	.input-tools-container,
 	.input-action-buttons,
 	.toolbar,
-	.gds-toolbar {
+	.gds-toolbar,
+	.under-input {
 		background: transparent !important;
 		background-color: transparent !important;
 		border-radius: 0 !important;
 	}
 
+
 	/* =========================================
        3. 侧边栏 (Sidebar)
        ========================================= */
-	bard-sidenav {
+	bard-sidenav,
+	.mat-mdc-menu-panel,
+	.toolbox-drawer-card,
+	.upload-file-card-container,
+	.card-zero-state {
 		border-right: 1px solid rgba(255, 215, 0, 0.2) !important;
 		background-color: rgba(0, 0, 0, 0.6) !important;
 		backdrop-filter: blur(10px);
