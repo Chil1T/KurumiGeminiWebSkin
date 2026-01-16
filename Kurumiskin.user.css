@@ -87,7 +87,8 @@
 	.mat-mdc-menu-panel,
 	.toolbox-drawer-card,
 	.upload-file-card-container,
-	.card-zero-state {
+	.card-zero-state,
+	.mat-mdc-text-field-wrapper {
 		border-right: 1px solid rgba(255, 215, 0, 0.2) !important;
 		background-color: rgba(0, 0, 0, 0.6) !important;
 		backdrop-filter: blur(10px);
