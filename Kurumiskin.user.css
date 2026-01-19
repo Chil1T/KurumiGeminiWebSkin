@@ -308,7 +308,7 @@
 		font-weight: 400 !important;
 	}
 
-	/*Gem description 描边*/
+	/*Gem description-描边*/
 	.bot-description {
 		filter: drop-shadow(1px 0 0 #aa2120) drop-shadow(-1px 0 0 #aa2120) drop-shadow(0 1px 0 #aa2120) drop-shadow(0 -1px 0 #aa2120);
 	}
