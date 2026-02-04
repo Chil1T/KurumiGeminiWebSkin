@@ -233,13 +233,13 @@
 	/* 发送按钮 */
 	.send-button,
 	.send-button .mat-mdc-button {
-		background-color: var(--kurumi-red) !important;
+		background-color: transparent !important;
 		border-radius: 0 !important;
 	}
 
 	.send-button:hover,
 	.send-button .mat-mdc-button:hover {
-		background-color: var(--kurumi-red-bright) !important;
+		background-color: transparent !important;
 	}
 
 	/* =========================================
