@@ -1,0 +1,6 @@
+.agent
+.claude/
+background.base64.txt
+css-audit-report.json
+tools/
+probes

@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           Gemini - Tokisaki Kurumi (Nightmare)
 @namespace      github.com/Chil1T/KurumiGeminiWebSkin
-@version        1.0.3.2
+@version        1.0.3.1
 @description    Date A Live Kurumi Theme for Gemini - Square Corners Update (Optimized)
 @author         Master Gemini  &&  chilltea 
 ==/UserStyle== */
@@ -439,13 +439,160 @@
 		color: var(--kurumi-gold-dim);
 	}
 
-	/* 分割线 - Scoped */
-	:is(.markdown, .query-text-line) hr {
-		border: none;
-		height: 2px;
-		background-color: #000000;
-		margin: 40px 0;
-		opacity: 1;
+
+	/* =========================================
+	   10. 浅色模式适配 - 强制保持深色色调
+	   =========================================
+	   Gemini 网页端在浅色模式下（设置→浅色）会切换
+	   --gem-sys-color--on-surface 等变量为深色值，
+	   导致文字在透明背景上不可读。
+	   此处覆盖相关变量使其与深色模式一致。
+	   参考了 Dracula-for-Gemini、thisisdkyadav/gemini-themes、
+	   RonkTsang/gemini-chat-extension 等社区皮肤的实践。
+	*/
+	:root .light-theme,
+	:where(.theme-host):where(.light-theme) {
+		/* === 文字颜色：强制浅色/白色 === */
+		--gem-sys-color--on-surface: #e0e0e0 !important;
+		--gem-sys-color--on-surface-variant: #c0c0c0 !important;
+		--gem-sys-color--on-primary: #ffffff !important;
+		--gem-sys-color--on-primary-container: #e0e0e0 !important;
+		--gem-sys-color--on-secondary: rgba(26, 26, 26, 0.8) !important;
+		--gem-sys-color--on-secondary-container: #e0e0e0 !important;
+
+		/* === 表面颜色：保持透明，让背景图透出 === */
+		--gem-sys-color--surface: transparent !important;
+		--gem-sys-color--surface-container: transparent !important;
+		--gem-sys-color--surface-container-high: transparent !important;
+		--gem-sys-color--surface-container-highest: transparent !important;
+		--gem-sys-color--surface-container-low: transparent !important;
+		--gem-sys-color--surface-container-lowest: transparent !important;
+		--gem-sys-color--primary-container: rgba(255, 255, 255, 0.05) !important;
+		--gem-sys-color--surface-dim: transparent !important;
+		--gem-sys-color--surface-bright: transparent !important;
+
+		/* === 边框/轮廓 === */
+		--gem-sys-color--outline: #444 !important;
+		--gem-sys-color--outline-variant: #333 !important;
+
+		/* === Bard/Material 特定变量 === */
+		--bard-color-onhover-conversation-metadata-button-v2: rgba(255, 255, 255, 0) !important;
+		--bard-color-form-field-placeholder: #999 !important;
+		--bard-color-code-chip-foreground: #c9d1d9 !important;
+		--bard-color-code-chip-background: #333 !important;
+		--bard-color-code-chip-background-selected: #555 !important;
+		--bard-color-surface-dim-tmp: transparent !important;
+		--bard-color-sidenav-background-desktop: transparent !important;
+		--bard-color-synthetic--chat-window-surface: transparent !important;
+		--mat-app-background-color: transparent !important;
+		--mat-app-text-color: #e0e0e0 !important;
+		--mat-form-field-outlined-input-text-color: #ffffff !important;
+		--mat-form-field-filled-input-text-color: #ffffff !important;
+		--mat-select-enabled-trigger-text-color: #e0e0e0 !important;
+		--mat-menu-item-label-text-color: #e0e0e0 !important;
+		--mat-list-list-item-label-text-color: #e0e0e0 !important;
+		--mat-dialog-subhead-color: #e0e0e0 !important;
+		--mat-dialog-supporting-text-color: #c0c0c0 !important;
 	}
+
+	/* 保险补丁：确保输入框文字在浅色模式下保持白色 */
+	:root .light-theme input,
+	:root .light-theme textarea,
+	:root .light-theme .mat-mdc-input-element,
+	:root .light-theme [contenteditable="true"],
+	:where(.theme-host):where(.light-theme) input,
+	:where(.theme-host):where(.light-theme) textarea,
+	:where(.theme-host):where(.light-theme) .mat-mdc-input-element,
+	:where(.theme-host):where(.light-theme) [contenteditable="true"] {
+		color: #ffffff !important;
+		-webkit-text-stroke: 2px #000000;
+		paint-order: stroke fill;
+	}
+
+	/* =========================================
+	   10b. 侧边栏：选中状态 & 扩展元素适配
+	   =========================================
+	   覆盖 Gemini 浅色模式下对话选中状态的白色高亮，
+	   以及外部扩展（如 gv-folder）添加的侧边栏元素文字颜色。
+	*/
+	:root .light-theme .conversation,
+	:root .light-theme conversation,
+	:where(.theme-host):where(.light-theme) .conversation,
+	:where(.theme-host):where(.light-theme) conversation {
+		background: transparent !important;
+		color: #e0e0e0 !important;
+	}
+
+	:root .light-theme .conversation.selected,
+	:where(.theme-host):where(.light-theme) .conversation.selected {
+		background-color: rgba(255, 255, 255, 0.05) !important;
+	}
+
+	/* 外部扩展 gv-folder 系列：强制白色文字 */
+	:root .light-theme .gv-folder-name,
+	:root .light-theme .gv-folder-header,
+	:root .light-theme .gv-folder-header-actions,
+	:root .light-theme .gv-folder-header-actions button,
+	:root .light-theme .gv-folder-list,
+	:where(.theme-host):where(.light-theme) .gv-folder-name,
+	:where(.theme-host):where(.light-theme) .gv-folder-header,
+	:where(.theme-host):where(.light-theme) .gv-folder-header-actions,
+	:where(.theme-host):where(.light-theme) .gv-folder-header-actions button,
+	:where(.theme-host):where(.light-theme) .gv-folder-list {
+		color: #e0e0e0 !important;
+	}
+
+	/* =========================================
+   10c. 三点菜单按钮 (Three-dot button) - 伪元素修复
+   =========================================
+   来自 DevTools AI 分析：Angular 的白色圆圈来自伪元素和 ripple 状态层，
+   而非按钮自身的 background-color。直接覆盖所有背景来源。
+   覆盖状态：选中/未选中, normal/hover/focus/menu-opened
+*/
+
+		/* 选中态按钮 + 其 ::before 伪元素：强制透明 */
+	:root .light-theme .conversation-items-container .selected .conversation-actions-menu-button,
+	:where(.theme-host):where(.light-theme) .conversation-items-container .selected .conversation-actions-menu-button {
+		background-color: transparent !important;
+		color: #e0e0e0 !important;
+	}
+	:root .light-theme .conversation-items-container .selected .conversation-actions-menu-button::before,
+	:where(.theme-host):where(.light-theme) .conversation-items-container .selected .conversation-actions-menu-button::before {
+		background-color: transparent !important;
+	}
+
+	/* 选中态 + hover/focus/menu-opened：使用深色模式风格的半透明白色叠加 */
+	:root .light-theme .conversation-items-container .selected .conversation-actions-menu-button:hover,
+	:root .light-theme .conversation-items-container .selected .conversation-actions-menu-button:focus,
+	:root .light-theme .conversation-items-container .selected .menu-opened.conversation-actions-menu-button,
+	:where(.theme-host):where(.light-theme) .conversation-items-container .selected .conversation-actions-menu-button:hover,
+	:where(.theme-host):where(.light-theme) .conversation-items-container .selected .conversation-actions-menu-button:focus,
+	:where(.theme-host):where(.light-theme) .conversation-items-container .selected .menu-opened.conversation-actions-menu-button {
+		background-color: rgba(255, 255, 255, 0.08) !important;
+		color: #e0e0e0 !important;
+	}
+	:root .light-theme .conversation-items-container .selected .conversation-actions-menu-button:hover::before,
+	:root .light-theme .conversation-items-container .selected .conversation-actions-menu-button:focus::before,
+	:where(.theme-host):where(.light-theme) .conversation-items-container .selected .conversation-actions-menu-button:hover::before,
+	:where(.theme-host):where(.light-theme) .conversation-items-container .selected .conversation-actions-menu-button:focus::before {
+		background-color: rgba(255, 255, 255, 0.08) !important;
+	}
+
+	/* 非选中态 + hover/focus */
+	:root .light-theme .conversation-actions-container .conversation-actions-menu-button:hover,
+	:root .light-theme .conversation-actions-container .conversation-actions-menu-button:focus,
+	:where(.theme-host):where(.light-theme) .conversation-actions-container .conversation-actions-menu-button:hover,
+	:where(.theme-host):where(.light-theme) .conversation-actions-container .conversation-actions-menu-button:focus {
+		background-color: rgba(255, 255, 255, 0.08) !important;
+		color: #e0e0e0 !important;
+	}
+
+	/* 消除 ripple 状态层 - 这是 Material 组件白色高亮的真正来源 */
+	:root .light-theme .conversation-actions-menu-button .mat-mdc-button-persistent-ripple::before,
+	:where(.theme-host):where(.light-theme) .conversation-actions-menu-button .mat-mdc-button-persistent-ripple::before {
+		display: none !important;
+		background: none !important;
+	}
+
 }
 
