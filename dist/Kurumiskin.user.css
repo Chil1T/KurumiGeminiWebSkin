@@ -493,6 +493,10 @@
 		--mat-list-list-item-label-text-color: #e0e0e0 !important;
 		--mat-dialog-subhead-color: #e0e0e0 !important;
 		--mat-dialog-supporting-text-color: #c0c0c0 !important;
+		/* === Material 特定变量（浅色模式额外覆盖） === */
+		--mat-sys-on-surface-variant: #c0c0c0 !important;
+		--mat-list-list-item-leading-icon-color: #c0c0c0 !important;
+		--gem-sys-color--secondary-container: rgba(255, 255, 255, 0.1) !important;
 	}
 
 	/* 保险补丁：确保输入框文字在浅色模式下保持白色 */
@@ -592,6 +596,105 @@
 	:where(.theme-host):where(.light-theme) .conversation-actions-menu-button .mat-mdc-button-persistent-ripple::before {
 		display: none !important;
 		background: none !important;
+	}
+
+	/* =========================================
+	   10d. 图标颜色 - 浅色模式强制浅色
+	   =========================================
+	   覆盖浅色模式下图标恢复为深灰色（#444746）的问题。
+	   源自 Angular 局部 --mat-sys-on-surface-variant 和
+	   --mat-list-list-item-leading-icon-color。
+	*/
+	:root .light-theme mat-icon.google-symbols,
+	:root .light-theme .bot-item-menu-icon,
+	:root .light-theme .project-item-menu-icon,
+	:root .light-theme .menu-icon,
+	:root .light-theme .main-menu-button .mat-icon,
+	:root .light-theme .search-button .mat-icon,
+	:root .light-theme .temp-chat-button .mat-icon,
+	:root .light-theme .project-menu-button .mat-icon,
+	:root .light-theme .bot-actions-menu-button .mat-icon,
+	:where(.theme-host):where(.light-theme) mat-icon.google-symbols,
+	:where(.theme-host):where(.light-theme) .bot-item-menu-icon,
+	:where(.theme-host):where(.light-theme) .project-item-menu-icon,
+	:where(.theme-host):where(.light-theme) .menu-icon,
+	:where(.theme-host):where(.light-theme) .main-menu-button .mat-icon,
+	:where(.theme-host):where(.light-theme) .search-button .mat-icon,
+	:where(.theme-host):where(.light-theme) .temp-chat-button .mat-icon,
+	:where(.theme-host):where(.light-theme) .project-menu-button .mat-icon,
+	:where(.theme-host):where(.light-theme) .bot-actions-menu-button .mat-icon {
+		color: #c0c0c0 !important;
+		fill: #c0c0c0 !important;
+	}
+
+	/* =========================================
+	   10e. 标签/胶囊 (Badge/Capsule) - 浅色模式透明化
+	   =========================================
+	   覆盖浅色模式下 --gem-sys-color--secondary-container 导致的
+	   淡蓝色胶囊背景（rgb(194,231,255)）。
+	*/
+	:root .light-theme .badge-container,
+	:root .light-theme .gds-label,
+	:root .light-theme .toolbox-drawer-item-badge,
+	:where(.theme-host):where(.light-theme) .badge-container,
+	:where(.theme-host):where(.light-theme) .gds-label,
+	:where(.theme-host):where(.light-theme) .toolbox-drawer-item-badge {
+		background-color: rgba(255, 255, 255, 0.1) !important;
+		color: #c0c0c0 !important;
+	}
+	:root .light-theme .badge-container .mat-icon,
+	:root .light-theme .badge-container mat-icon,
+	:where(.theme-host):where(.light-theme) .badge-container .mat-icon,
+	:where(.theme-host):where(.light-theme) .badge-container mat-icon {
+		color: inherit !important;
+	}
+
+	/* =========================================
+	   10f. 列表项悬浮 (Hover) - 浅色模式锁定颜色
+	   =========================================
+	   覆盖浅色模式下 .mat-mdc-list-item:hover 将标签文字变为
+	   浅灰色的行为。强制保持与深色模式一致的 #e0e0e0。
+	   同时保持 border-radius: 0（侧边栏按钮去除圆角）。
+	*/
+	:root .light-theme .mat-mdc-list-item:hover .label,
+	:root .light-theme .mat-mdc-list-item:hover .label.gds-label-l,
+	:root .light-theme .mat-mdc-list-item:hover canvas,
+	:root .light-theme .toolbox-drawer-item-list-button:hover .label,
+	:root .light-theme .toolbox-drawer-item-list-button:hover canvas,
+	:where(.theme-host):where(.light-theme) .mat-mdc-list-item:hover .label,
+	:where(.theme-host):where(.light-theme) .mat-mdc-list-item:hover .label.gds-label-l,
+	:where(.theme-host):where(.light-theme) .mat-mdc-list-item:hover canvas,
+	:where(.theme-host):where(.light-theme) .toolbox-drawer-item-list-button:hover .label,
+	:where(.theme-host):where(.light-theme) .toolbox-drawer-item-list-button:hover canvas {
+		color: #e0e0e0 !important;
+		opacity: 1 !important;
+		filter: none !important;
+	}
+
+	:root .light-theme .mat-mdc-list-item:hover,
+	:root .light-theme .toolbox-drawer-item-list-button:hover,
+	:where(.theme-host):where(.light-theme) .mat-mdc-list-item:hover,
+	:where(.theme-host):where(.light-theme) .toolbox-drawer-item-list-button:hover {
+		border-radius: 0 !important;
+		transition: none !important;
+	}
+
+	/* =========================================
+	   11. Toolbox 菜单圆角修复
+	   =========================================
+	   使 toolbox-drawer 弹出菜单的圆角与 upload-file 等其他
+	   Material 菜单保持一致，防止滚动内容凸出圆角边界。
+	*/
+	mat-card.toolbox-drawer-more-menu-card {
+		border-radius: var(--gem-sys-shape--corner-large, 16px) !important;
+		overflow: hidden !important;
+		backdrop-filter: blur(10px);
+		border: none !important;
+	}
+	mat-card.toolbox-drawer-more-menu-card #toolbox-drawer-menu {
+		border-radius: inherit;
+		padding-top: 8px !important;
+		padding-bottom: 8px !important;
 	}
 
 }
